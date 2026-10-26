@@ -21,23 +21,32 @@ jobs:
         with:
           gradle-version: '8.7'
 
-      - name: Buscar el proyecto
+      - name: Ordenar carpetas (si los archivos se subieron sueltos)
         run: |
-          echo "Archivos del repositorio:"
-          find . -maxdepth 3 -not -path './.git*' | sort
-          SETTINGS=$(find . -name settings.gradle -not -path './.git/*' | head -1)
-          if [ -z "$SETTINGS" ]; then
-            echo "::error::No encontré settings.gradle. Revisa que se hayan subido todos los archivos."
-            exit 1
+          set -e
+          if [ ! -d app ] && ls *.java >/dev/null 2>&1; then
+            echo "Archivos sueltos detectados: ordenando carpetas..."
+            mkdir -p app/src/main/java/cl/jc/inicio app/src/main/res/drawable app/src/main/res/values gradle/wrapper
+            mv *.java app/src/main/java/cl/jc/inicio/
+            mv AndroidManifest.xml app/src/main/
+            mv banner.xml bg.xml ic_*.xml app/src/main/res/drawable/
+            mv colors.xml strings.xml styles.xml app/src/main/res/values/
+            for f in *.gradle; do
+              [ "$f" = "settings.gradle" ] && continue
+              if grep -q "namespace" "$f"; then APP="$f"; else ROOT="$f"; fi
+            done
+            mv "$APP" app.gradle.tmp
+            mv "$ROOT" build.gradle
+            mv app.gradle.tmp app/build.gradle
+            [ -f gradle-wrapper.jar ] && mv gradle-wrapper.jar gradle-wrapper.properties gradle/wrapper/ || true
           fi
-          echo "PROJ=$(dirname "$SETTINGS")" >> $GITHUB_ENV
+          find . -not -path './.git*' -type f | sort
 
       - name: Compilar
-        working-directory: ${{ env.PROJ }}
         run: gradle assembleRelease --no-daemon --stacktrace
 
       - name: Renombrar APK
-        run: cp "$PROJ/app/build/outputs/apk/release/app-release.apk" InicioTV.apk
+        run: cp app/build/outputs/apk/release/app-release.apk InicioTV.apk
 
       - uses: actions/upload-artifact@v4
         with:
