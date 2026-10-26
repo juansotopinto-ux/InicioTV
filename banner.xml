@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+    <path android:fillColor="#FF161D29" android:pathData="M0,0h320v180h-320z" />
+    <!-- Casa -->
+    <path android:fillColor="#FF7FB8FF"
+        android:pathData="M160,52 L206,92 L198,92 L198,130 L122,130 L122,92 L114,92 Z" />
+    <path android:fillColor="#FF161D29"
+        android:pathData="M150,104 h20 v26 h-20 z" />
+</vector>

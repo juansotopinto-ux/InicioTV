@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Inicio</string>
+    <string name="my_apps">Mis apps</string>
+    <string name="all_apps">Todas las apps</string>
+    <string name="settings">Ajustes</string>
+    <string name="recents">Recientes</string>
+    <string name="get_apps">Descargar apps</string>
+    <string name="customize">Personalizar</string>
+    <string name="all_apps_hint">Mantén presionado OK sobre una app para agregarla o quitarla de Inicio</string>
+    <string name="home_hint">Mantén presionado OK para mover u ocultar</string>
+    <string name="empty_home">No hay apps en Inicio. Entra a Todas las apps para agregarlas.</string>
+</resources>

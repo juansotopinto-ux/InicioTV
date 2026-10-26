@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_top">#FF0B0E13</color>
+    <color name="bg_bottom">#FF161D29</color>
+    <color name="card">#FF1E2531</color>
+    <color name="card_focused">#FF2A3445</color>
+    <color name="accent">#FF7FB8FF</color>
+    <color name="text_primary">#FFF2F4F7</color>
+    <color name="text_secondary">#FF8C96A6</color>
+</resources>

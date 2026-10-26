@@ -1,0 +1,38 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'cl.jc.inicio'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'cl.jc.inicio'
+        minSdk 21
+        targetSdk 34
+        versionCode 2
+        versionName '1.1'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            // Se firma con la clave de depuración para poder instalarlo directo
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+// Sin librerías externas: el APK queda muy liviano (ideal para 1 GB de RAM)
+dependencies {
+}
