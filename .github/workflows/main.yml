@@ -17,13 +17,27 @@ jobs:
 
       - uses: android-actions/setup-android@v3
 
-      - name: Compilar
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Buscar el proyecto
         run: |
-          chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon
+          echo "Archivos del repositorio:"
+          find . -maxdepth 3 -not -path './.git*' | sort
+          SETTINGS=$(find . -name settings.gradle -not -path './.git/*' | head -1)
+          if [ -z "$SETTINGS" ]; then
+            echo "::error::No encontré settings.gradle. Revisa que se hayan subido todos los archivos."
+            exit 1
+          fi
+          echo "PROJ=$(dirname "$SETTINGS")" >> $GITHUB_ENV
+
+      - name: Compilar
+        working-directory: ${{ env.PROJ }}
+        run: gradle assembleRelease --no-daemon --stacktrace
 
       - name: Renombrar APK
-        run: cp app/build/outputs/apk/release/app-release.apk InicioTV.apk
+        run: cp "$PROJ/app/build/outputs/apk/release/app-release.apk" InicioTV.apk
 
       - uses: actions/upload-artifact@v4
         with:
